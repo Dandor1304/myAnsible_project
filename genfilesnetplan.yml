@@ -1,0 +1,47 @@
+---
+- name: Create config files for netplan
+  hosts: all
+  become: yes
+
+  vars:
+    srcfile: ./templates
+    destfile: /etc/netplan
+
+  tasks:
+
+  - name: Generate config file netplan for labnode1 and labnode3
+    template: src={{srcfile}}/netplanconfig.j2 dest={{destfile}}/netplanconfig.yaml mode=644
+    when: ansible_hostname != 'labnode2'
+  
+  - name: Generate config file netplan for labnode2
+    template: src={{srcfile}}/config2interface.j2 dest={{destfile}}/config2interface.yaml
+    when: ansible_hostname == 'labnode2'
+
+  - name: Netplan apply
+    shell: netplan apply
+
+  - block:
+
+      - name: config iptables to labnode3
+        iptables:
+          table: nat
+          chain: POSTROUTING
+          out_interface: eth2
+          jump: SNAT
+          to_source: "{{ansible_eth2.ipv4.address}}"
+
+      - name: config iptables to labnode1
+        iptables:
+          table: nat
+          chain: POSTROUTING
+          out_interface: eth1
+          jump: SNAT
+          to_source: "{{ansible_eth1.ipv4.address}}"
+
+      - name: Set ip forwarding
+        sysctl:
+          name: net.ipv4.ip_forward
+          value: '1'
+          sysctl_set: yes
+
+    when: ansible_hostname == 'labnode2'

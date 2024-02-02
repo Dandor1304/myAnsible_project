@@ -4,6 +4,13 @@
   become: yes
 
   tasks:
-    - name: ping
-      ping:
+  - name: ping
+    ping:
 
+  - name: Check ip addreses
+    debug:
+      var: ansible_all_ipv4_addresses
+  
+  - name: Parsing ip
+    debug:
+      var: ansible_eth2.ipv4.address

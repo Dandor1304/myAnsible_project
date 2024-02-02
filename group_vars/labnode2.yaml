@@ -1,0 +1,4 @@
+---
+ipeth1: 100.64.0.2/24 # set netmask
+ipeth2: 169.254.12.2/24 # set netmask
+

@@ -1,0 +1,10 @@
+network:
+    version: 2
+    ethernets:
+        eth1:
+            dhcp4: no
+            addresses:
+                - {{ipeth1}}
+            routes:
+            - to: {{ipto}}
+              via: {{ipvia}}   

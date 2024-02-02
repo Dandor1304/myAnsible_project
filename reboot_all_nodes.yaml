@@ -1,0 +1,13 @@
+---
+- name: Reboot all nodes
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: Reboot
+    shell: shutdown -r
+    register: results
+
+  - name: Check  
+    debug:
+      var: results 
