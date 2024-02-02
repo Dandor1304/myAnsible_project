@@ -1,7 +1,5 @@
-[labnode1]
-172.17.34.122
-[labnode2]
-172.17.32.127
-[labnode3]
-172.17.36.21
+
+labnode1 ansible_host=172.17.34.122
+labnode2 ansible_host=172.17.32.127
+labnode3 ansible_host=172.17.36.21
 
