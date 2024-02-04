@@ -1,0 +1,5 @@
+---
+ipeth1: 169.254.12.3 # set netmask
+ipto: 100.64.0.0 # set netmask
+ipvia: 169.254.12.2
+netmask: /24

@@ -4,7 +4,7 @@ network:
         eth1:
             dhcp4: no
             addresses:
-                - {{ipeth1}}
+                - {{ipeth1}}{{netmask}}
             routes:
-            - to: {{ipto}}
+            - to: {{ipto}}{{netmask}}
               via: {{ipvia}}   

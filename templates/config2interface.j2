@@ -4,8 +4,8 @@ network:
         eth1:
             dhcp4: no
             addresses:
-                - {{ipeth1}}
+                - {{ipeth1}}{{netmask}}
         eth2:
             dhcp4: no
             addresses:
-                - {{ipeth2}}          
+                - {{ipeth2}}{{netmask}}          
