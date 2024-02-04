@@ -1,0 +1,5 @@
+---
+# handlers file for netconfigure
+- name: Netplan apply
+  shell: netplan apply
+

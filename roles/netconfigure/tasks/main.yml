@@ -1,26 +1,18 @@
 ---
-- name: Create config files for netplan
-  hosts: all
-  become: yes
-
-  vars:
-    srcfile: ./templates
-    destfile: /etc/netplan
-
-  tasks:
+# tasks file for netconfigure
 
   - name: Generate config file netplan for labnode1 and labnode3
-    template: src={{srcfile}}/netplanconfig.j2 dest={{destfile}}/netplanconfig.yaml mode=644
+    template: src=netplanconfig.j2 dest={{destfile}}/netplanconfig.yaml mode=644
     when: ansible_hostname != 'labnode2'
     notify:
       - Netplan apply
 
   - name: Generate config file netplan for labnode2
-    template: src={{srcfile}}/config2interface.j2 dest={{destfile}}/config2interface.yaml
+    template: src=config2interface.j2 dest={{destfile}}/config2interface.yaml
     when: ansible_hostname == 'labnode2'
     notify:
       - Netplan apply
-  
+
   - block:
 
       - name: config iptables to labnode3
@@ -46,7 +38,3 @@
           sysctl_set: yes
 
     when: ansible_hostname == 'labnode2'
-
-  handlers:
-   - name: Netplan apply
-     shell: netplan apply
